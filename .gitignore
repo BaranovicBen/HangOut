@@ -6,6 +6,17 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# React Native & Expo typical .gitignore
+node_modules/
+.expo/
+.expo-shared/
+android/
+ios/
+.env
+*.log
+.DS_Store
+.vscode/
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
