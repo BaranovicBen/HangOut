@@ -1,15 +1,35 @@
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
 # dependencies
 node_modules/
+jspm_packages/
 
-# Expo
+# Expo & React Native
 .expo/
+.expo-shared/
+android/
+ios/
+
+# build outputs
 dist/
 web-build/
-expo-env.d.ts
+.next
+out
+.nuxt
+.cache/
+.cache
+.parcel-cache
+.parcel-cache
 
-# Native
+# Native build / signing files
 .kotlin/
 *.orig.*
 *.jks
@@ -21,19 +41,110 @@ expo-env.d.ts
 # Metro
 .metro-health-check*
 
-# debug
+# Debug logs
 npm-debug.*
 yarn-debug.*
 yarn-error.*
 
-# macOS
+# macOS files
 .DS_Store
 *.pem
 
-# local env files
+# local env files and dotenv
+.env
+.env*
 .env*.local
+!.env.example
 
-# typescript
+# TypeScript
 *.tsbuildinfo
 
-app-example
+# Runtime & process data
+pids
+*.pid
+*.seed
+*.pid.lock
+.node_repl_history
+
+# Coverage & testing
+coverage
+*.lcov
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf config
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Snowpack dependency directory
+web_modules/
+
+# ESLint / Stylelint caches
+.eslintcache
+.stylelintcache
+
+# npm pack output
+*.tgz
+
+# Yarn Integrity file and cache
+.yarn-integrity
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Parcel cache
+.cache
+.parcel-cache
+
+# Gatsby build files
+.cache/
+# public directory for Gatsby (commented out for Next.js)
+# public
+
+# Vuepress
+.vuepress/dist
+.temp
+.cache
+
+# SvelteKit
+.svelte-kit/
+
+# Vitepress
+**/.vitepress/dist
+**/.vitepress/cache
+
+# Docusaurus
+.docusaurus
+
+# Serverless
+.serverless/
+
+# FuseBox
+.fusebox/
+
+# DynamoDB Local
+.dynamodb/
+
+# Firebase cache
+.firebase/
+
+# TernJS port file
+.tern-port
+
+# VSCode testing versions
+.vscode-test
+
+# Vite logs files
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*

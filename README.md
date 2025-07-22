@@ -48,3 +48,5 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+# meetMe
+Building a native, private, cross-platform calendar coordination app for young adults who want to spend time together but struggle to align schedules — regardless of which calendar tools they use.
