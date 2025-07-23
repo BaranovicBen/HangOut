@@ -50,3 +50,19 @@ Join our community of developers creating universal apps.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
 # meetMe
 Building a native, private, cross-platform calendar coordination app for young adults who want to spend time together but struggle to align schedules — regardless of which calendar tools they use.
+
+## Architecture design plan:
+[HangOut-ArchitecturePlan-v1.docx](https://github.com/user-attachments/files/21382845/HangOut-ArchitecturePlan-v1.docx)
+
+### Draft 1 of UI/X Design:
+[meetME UI.pdf](https://github.com/user-attachments/files/21382872/meetME.UI.pdf)
+
+### Draft 2 of UI/X Design:
+[meetME UI-2.pdf](https://github.com/user-attachments/files/21382874/meetME.UI-2.pdf)
+
+### Draft 3 of UI/X Design:
+[meetME UI-3.pdf](https://github.com/user-attachments/files/21382885/meetME.UI-3.pdf)
+
+## Draft 4 of UI/X Design:
+[meetME UI-4.pdf](https://github.com/user-attachments/files/21382858/meetME.UI-4.pdf)
+
