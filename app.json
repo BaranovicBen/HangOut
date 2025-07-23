@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "meetME",
-    "slug": "meetME",
+    "slug": "meetme",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -37,6 +37,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "4d906d8f-22ca-4d1d-b251-9dcb3fd2c345"
+      }
+    },
+    "owner": "baranben"
   }
 }
