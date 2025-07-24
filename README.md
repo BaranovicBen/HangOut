@@ -104,14 +104,15 @@ Social feedback loops and personalization will also help engagement.  HangOut co
 **🦦 Top Name Suggestions for Your Otter Mascot**
 
 **Name	Style	Why It Works**
-   Hugh	   Classic, chill	Feels human, smart, and low-key friendly.    “Hugh the HangOut Otter” has nice alliteration.
+   
+   **Hugh**	   Classic, chill	Feels human, smart, and low-key friendly.    “Hugh the HangOut Otter” has nice alliteration.
 
-   Ollie	   Playful, Gen Z-friendly	A common otter name; warm and fun.    Easy to animate and brand.
+   **Ollie**	   Playful, Gen Z-friendly	A common otter name; warm and fun.    Easy to animate and brand.
 
-   Otto	   Punny, clean	Short, clever take on “otter.”    Otto the Otter rolls off the tongue.
+   **Otto**	   Punny, clean	Short, clever take on “otter.”    Otto the Otter rolls off the tongue.
 
-   Ozzy	   Quirky, memorable	   Edgy but cute — gives the mascot some personality without being cringey.
+   **Ozzy**	   Quirky, memorable	   Edgy but cute — gives the mascot some personality without being cringey.
 
-   Milo	   Soft, approachable	   Popular among Gen Z — cute without sounding fake.
+   **Milo**	   Soft, approachable	   Popular among Gen Z — cute without sounding fake.
 
 
