@@ -39,7 +39,7 @@ const SettingsScreen = () => {
     <View style={styles.container}>
       {/* NavBar */}
       <View style={styles.navBar}>
-        <TouchableOpacity onPress={() => router.push('/home')}>
+        <TouchableOpacity onPress={() => router.push('/Home')}>
             <Text style={styles.sideIcon}>🏠</Text>
         </TouchableOpacity>
             <Text style={styles.navTitle}>Settings</Text>
@@ -48,7 +48,7 @@ const SettingsScreen = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Sections */}
+      {/* Sections */}  
       <View style={styles.sectionsWrapper}>
         {sections.map((section) => (
           <View key={section.title} style={styles.section}>

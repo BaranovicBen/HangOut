@@ -6,35 +6,25 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  FlatList,
+  TextInput,
 } from 'react-native'
 
 const AccountScreen = () => {
+  const [isEditing, setIsEditing] = useState(false)
   const [name, setName] = useState('Maia Juriska')
   const [username, setUsername] = useState('@maiaJuri')
-
-  const [friends, setFriends] = useState([
-    '@johndoe1',
-    '@johndoe2',
-    '@johndoe3',
-    '@johndoe4',
-  ])
-
-  const handleEdit = () => {
-    setName('Jane Doe')
-    setUsername('@janeDoe')
-  }
+  const [friends, setFriends] = useState(['@johndoe1', '@johndoe2', '@johndoe3'])
 
   return (
     <View style={styles.container}>
       {/* NavBar */}
       <View style={styles.navBar}>
         <TouchableOpacity onPress={() => router.push('/settings')}>
-            <Text style={styles.sideIcon}>⚙️</Text>
+          <Text style={styles.sideIcon}>⚙️</Text>
         </TouchableOpacity>
-            <Text style={styles.title}>My Account</Text>
-        <TouchableOpacity onPress={() => router.push('/home')}>
-            <Text style={styles.sideIcon}>🏠</Text>
+        <Text style={styles.title}>My Account</Text>
+        <TouchableOpacity onPress={() => router.push('/Home')}>
+          <Text style={styles.sideIcon}>🏠</Text>
         </TouchableOpacity>
       </View>
 
@@ -49,16 +39,42 @@ const AccountScreen = () => {
       {/* User Info */}
       <View style={styles.infoBox}>
         <Text style={styles.sectionTitle}>You</Text>
-        <View style={styles.infoRow}>
-          <Text style={styles.infoLabel}>Name</Text>
-          <Text style={styles.infoValue}>{name}</Text>
-        </View>
-        <View style={styles.infoRow}>
-          <Text style={styles.infoLabel}>Username</Text>
-          <Text style={styles.infoValue}>{username}</Text>
-        </View>
-        <TouchableOpacity style={styles.editRow} onPress={handleEdit}>
-          <Text style={styles.editText}>Edit</Text>
+
+        {isEditing ? (
+          <>
+            <TextInput
+              style={styles.input}
+              value={name}
+              onChangeText={setName}
+              placeholder="Your name"
+            />
+            <TextInput
+              style={styles.input}
+              value={username}
+              onChangeText={(text) => {
+                if (text.startsWith('@')) setUsername(text)
+              }}
+              placeholder="@username"
+            />
+          </>
+        ) : (
+          <>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Name</Text>
+              <Text style={styles.infoValue}>{name}</Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Username</Text>
+              <Text style={styles.infoValue}>{username}</Text>
+            </View>
+          </>
+        )}
+
+        <TouchableOpacity
+          style={styles.editRow}
+          onPress={() => setIsEditing((prev) => !prev)}
+        >
+          <Text style={styles.editText}>{isEditing ? 'Save' : 'Edit'}</Text>
           <View style={styles.editIcon} />
         </TouchableOpacity>
       </View>
@@ -69,13 +85,28 @@ const AccountScreen = () => {
           <Text style={styles.sectionTitle}>Friends</Text>
           <View style={styles.plusIcon} />
         </View>
-        {friends.map((friend) => (
-          <View key={friend} style={styles.friendRow}>
-            <View style={styles.avatar} />
-            <Text style={styles.friendText}>{friend}</Text>
-            <Text style={styles.removeIcon}>✕</Text>
+
+        {friends.length > 0 ? (
+          friends.map((friend, index) => (
+            <View key={friend} style={styles.friendRow}>
+              <View style={styles.friendIcon} />
+              <Text style={styles.friendText}>{friend}</Text>
+              <TouchableOpacity
+                onPress={() =>
+                  setFriends((prev) =>
+                    prev.filter((_, i) => i !== index)
+                  )
+                }
+              >
+                <Text style={styles.remove}>✕</Text>
+              </TouchableOpacity>
+            </View>
+          ))
+        ) : (
+          <View style={styles.friendEmptyBox}>
+            <View style={styles.friendBox} />
           </View>
-        ))}
+        )}
       </View>
     </View>
   )
@@ -89,14 +120,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   navBar: {
+    width: '100%',
     flexDirection: 'row',
-    width: '90%',
     justifyContent: 'space-between',
+    paddingHorizontal: 24,
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 16,
   },
-  icon: {
+  sideIcon: {
     fontSize: 20,
+    fontWeight: 'bold',
   },
   title: {
     fontSize: 20,
@@ -147,6 +180,13 @@ const styles = StyleSheet.create({
     height: 20,
     backgroundColor: '#000',
   },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 8,
+    borderRadius: 8,
+    marginVertical: 4,
+  },
   friendsBox: {
     backgroundColor: '#f0f0f0',
     width: '90%',
@@ -167,27 +207,33 @@ const styles = StyleSheet.create({
   friendRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 10,
   },
-  avatar: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: '#000',
+  friendIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'black',
     marginRight: 12,
   },
   friendText: {
     flex: 1,
     fontSize: 16,
   },
-  removeIcon: {
+  remove: {
     fontSize: 20,
-    color: '#000',
+    color: 'red',
     paddingHorizontal: 8,
   },
-  sideIcon: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  friendEmptyBox: {
+    alignItems: 'center',
+    marginTop: 12,
+  },
+  friendBox: {
+    width: '100%',
+    height: 60,
+    backgroundColor: '#000',
+    borderRadius: 16,
   },
 })
 

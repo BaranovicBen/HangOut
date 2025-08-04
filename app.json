@@ -4,7 +4,7 @@
     "slug": "meetme",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/hangOutv1.png",
+    "icon": "./assets/images/hangOut.png",
     "scheme": "meetme",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
