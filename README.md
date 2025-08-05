@@ -1,54 +1,107 @@
 # HangOut
-Building a native, private, cross-platform calendar coordination app for young adults who want to spend time together but struggle to align schedules — regardless of which calendar tools they use.
+<table>
+  <tr>
+    <td>
+      <p align="left">
+        <strong>About Project</strong><br><br>
+        Building a native, private, cross-platform calendar coordination app tailored for friend groups and young adults who want to spend time together — but struggle to find common free days.<br><br>
+        With a minimal design, privacy-first logic, and future support for iCal imports, HangOut is being developed for iOS and Android using React Native and Expo.
+      </p>
+    </td>
+    <td align="right">
+      <img src="assets/images/hangOut.png" alt="HangOut Logo" width="200"/>
+    </td>
+  </tr>
+</table>
 
-## Architecture design plan:
+---
+## 📊 Architecture & UI/X
+
+### ✍️ Architecture Design Plan:
+
 [HangOut-ArchitecturePlan-v1.docx](https://github.com/user-attachments/files/21382845/HangOut-ArchitecturePlan-v1.docx)
 
-### Draft 1 of UI/X Design:
-[meetME UI.pdf](https://github.com/user-attachments/files/21382872/meetME.UI.pdf)
+### 🖼️ UI/UX Design Drafts:
 
-### Draft 2 of UI/X Design:
-[meetME UI-2.pdf](https://github.com/user-attachments/files/21382874/meetME.UI-2.pdf)
+* [Draft 1 – meetME UI.pdf](https://github.com/user-attachments/files/21382872/meetME.UI.pdf)
+* [Draft 2 – meetME UI-2.pdf](https://github.com/user-attachments/files/21382874/meetME.UI-2.pdf)
+* [Draft 3 – meetME UI-3.pdf](https://github.com/user-attachments/files/21382885/meetME.UI-3.pdf)
+* [Draft 4 – meetME UI-4.pdf](https://github.com/user-attachments/files/21382858/meetME.UI-4.pdf)
 
-### Draft 3 of UI/X Design:
-[meetME UI-3.pdf](https://github.com/user-attachments/files/21382885/meetME.UI-3.pdf)
+---
 
-## Draft 4 of UI/X Design:
-[meetME UI-4.pdf](https://github.com/user-attachments/files/21382858/meetME.UI-4.pdf)
+## 🌟 UI Personalization & Emotional Resonance
 
-# UI Personalization and Emotional Resonance
+HangOut’s current monochrome/green theme feels sleek but impersonal. To appeal to Gen Z, we plan to introduce **vibrant accents and personalization**: custom theme colors, group-based background images, emojis, and fun illustrations. Avatars will feature more prominently, especially on invitations. Think Duolingo-style: bold, rich, playful.
 
-HangOut’s current monochrome/green theme feels sleek but can seem impersonal.  To appeal to Gen Z, introduce **vibrant accents and personalization options** – for example, allow custom theme colors or background images for each group. Gen Z craves *“rich visuals”* and emojis/animations in apps, so adding subtle bursts of color (e.g. a pastel or neon accent for buttons and highlights) and playful illustrations can make the UI feel warmer.  Consider showing friends’ profile pictures or avatars prominently on meetup invites, and use emoji reactions/stickers liberally in chat and notifications.  This follows best practices: Duolingo mixes bright greens and yellows and uses a friendly cartoon owl to feel playful, and other Gen Z-focused apps lean into bold, authentic visuals rather than ultra-minimalist palettes.  In practice, HangOut might swap its solid-green highlights for gradient or complementary hues on each page, display friendly iconography (smiling avatars, fun badges), and use casual, conversational text (e.g. “Jane 😎 thinks a movie night sounds awesome!”) so users feel the app has personality tailored to them.
+Sample ideas:
 
-## Micro-interactions, Animations and Haptics
+* Gradient or pastel button highlights
+* Friendly iconography and reactions
+* Casual UI language (e.g. “Jane 😎 thinks a movie night sounds awesome!”)
 
-Small, delightful animations and feedback can greatly boost enjoyment without overwhelming the user.  For instance, Duolingo rewards lesson completion with a **confetti blast** and a pulsing progress bar for each correct answer.  HangOut can mimic this by adding a quick sparkle animation or “pop” effect when a user successfully schedules or RSVPs to an event, or a confetti burst when an event is created or filled.  Similarly, use **progress indicators** (pulsing bars or checkmark animations) during RSVP steps to give a sense of accomplishment.  Gentle **sound cues** or **vibrations** on key actions (a soft “ding” and light haptic tap on RSVP, for example) can create a dopamine hit; Duolingo’s “chirps” and Duo’s cute voice for correct answers are good examples.  Importantly, keep these feedbacks subtle – as a Duolingo designer advises, *“Less is more. Opt for clean animations, well-chosen sound effects, or subtle haptic feedback instead of bombarding users with sensory overload.”*  In practice, avoid full-screen animations or loud sounds; instead use brief, joyful accents (confetti, sparkle, small bounce) and quick vibrations on successful taps. This way the app feels lively and rewarding (akin to Duolingo’s “celebrations”) without feeling gimmicky or annoying.
+---
 
-## Mascot and Brand Character
+## ✨ Micro-interactions, Animations & Haptics
 
-A friendly mascot can humanize HangOut and make it relatable.  Duolingo’s green owl **Duo** is beloved by Gen Z for its humor and personality, and Phantom Wallet’s ghost mascot was redesigned as a “trusted companion” to make crypto feel approachable.  HangOut should pick a **“cute but not cringe”** character – likely an extroverted social animal.  For example, a playful puppy, curious otter, or sociable primate character could work.  It should be drawn in a simple, modern cartoon style (bright solid colors, friendly eyes, big smile) and used sparingly: maybe popping up in tutorials or confirmation screens saying things like “Let’s go!” or giving a thumbs-up.  The tone should be light and authentic (think a character texting a meme, not a stiff corporate icon).  Gen Z responds to mascots that feel humorous and real, so avoid overly polished or “marketing” wording.  The mascot can also incorporate the app’s green accent and be active on social media or in notifications to build community feel. Overall, the mascot should embody fun and friendship (e.g. an otter giving a high-five or an owl giving a wink) rather than something cheesy.
+Inspired by Duolingo and Nike Run Club:
 
-## Future Social/Gamified Features
+* Confetti, sparkles or bounce animations after RSVP or event creation
+* Subtle sound/haptic feedback (e.g. "ding!" + vibration)
+* Progress indicators: pulsing bars, animated checkmarks
 
-After launch, add light gamification that rewards core HangOut behaviors.  For example, award **points or XP** whenever a user organizes or attends a meetup, letting them “level up” as a host.  Many top apps use exactly this – Duolingo grants XP and levels for lessons, and even bars like Nike Run Club use achievements and streaks to keep people coming back.  HangOut could similarly introduce **badges or titles**: e.g. a **“First Hangout”** badge for the first event organized, “Social Butterfly” for inviting 10 friends, or “Party Starter” for a streak of weekly meetups.  A simple **streak counter** (e.g. consecutive weeks of hosting or attending an event) taps into habit-building mechanics.  StriveCloud notes that Duolingo’s daily streaks make users *“3× more likely to return”*; even a modest hangout streak (with gentle reminders like “You’ve planned 4 weekends in a row!”) could motivate consistency.
+> Less is more: animations should delight, not overwhelm.
 
-Social feedback loops and personalization will also help engagement.  HangOut could surface **suggestions** like “Lucia is free this weekend – want to plan something?” as a push notification or in-app banner.  Revolut’s app famously sends timely personalized messages (e.g. “Welcome home!” after a trip) which deepen user relationships.  Analogously, HangOut could use calendar data or recent activity to notify users of friends’ availabilities or upcoming common free time, making coordination feel effortless.  Finally, incorporate **seasonal challenges and rewards**: limited-time badges or mini-events for holidays.  For instance, an autumn **“Spooky Hangout”** badge for hosting a Halloween get-together, or a summer **“Festival Fan”** badge for meeting up during a music festival season.  Many apps gamify seasonality – Duolingo runs monthly/holiday badges that users eagerly chase – and YodelMobile advises that *“seasonal badges and rewards”* (like Advent calendars or special holiday challenges) create urgency and stickiness.  Implementing these features early (points, badges, simple leaderboard among friends, smart notifications) will give HangOut a playful, social layer proven to resonate with Gen Z.
+---
 
-**Sources:** Analysis of Duolingo’s, Phantom Wallet’s, Revolut’s, Calendly’s, ClickUp’s and When2Meet’s design and engagement strategies. These informed the above actionable recommendations.
+## 🧐 Mascot & Brand Identity
 
-## The maskot will be otter possible names are:
-**🦦 Top Name Suggestions for Your Otter Mascot**
+Introducing an extroverted social **otter** mascot! Why? Otters are curious, social, and friendly — perfect for our theme of hanging out. The style: simple, cute cartoon with a bright smile.
 
-**Name	Style	Why It Works**
-   
-   **Hugh**	   Classic, chill	Feels human, smart, and low-key friendly.    “Hugh the HangOut Otter” has nice alliteration.
+### 🦦 Name Ideas for Our Otter:
 
-   **Ollie**	   Playful, Gen Z-friendly	A common otter name; warm and fun.    Easy to animate and brand.
+| Name      | Style        | Why It Works                                    |
+| --------- | ------------ | ----------------------------------------------- |
+| **Hugh**  | Classic      | "Hugh the HangOut Otter" has smart alliteration |
+| **Ollie** | Playful      | Warm, Gen Z-friendly, easy to animate           |
+| **Otto**  | Punny        | Clever twist on "otter" — clean branding        |
+| **Ozzy**  | Quirky       | Edgy, fun personality                           |
+| **Milo**  | Approachable | Cute and popular Gen Z name                     |
 
-   **Otto**	   Punny, clean	Short, clever take on “otter.”    Otto the Otter rolls off the tongue.
+The mascot will show up in:
 
-   **Ozzy**	   Quirky, memorable	   Edgy but cute — gives the mascot some personality without being cringey.
+* Tutorials
+* Confirmation screens
+* Notifications and seasonal events
 
-   **Milo**	   Soft, approachable	   Popular among Gen Z — cute without sounding fake.
+---
 
+## 🌈 Future Gamification Ideas
 
+HangOut will reward social coordination with **points, streaks, and badges**:
+
+* ⭐ "First Hangout" badge for first event
+* 🌸 "Social Butterfly" for 10+ invites
+* 📊 Meetup streak counter
+* 🌟 Seasonal badges (e.g. Spooky Hangout for Halloween)
+
+These light gamification elements:
+
+* Tap into Gen Z habit mechanics (e.g. Duolingo streaks)
+* Build motivation through personalized feedback ("Lucia is free this weekend—want to plan something?")
+* Use push notifications smartly (like Revolut or Spotify)
+
+---
+
+## 📆 Version & Milestone Timeline (coming soon)
+
+* v0.1: MVP (calendar parsing, group planner UI)
+* v0.2: iCal integration + logic polishing
+* v0.3: UI personalization + animations + mascot
+* v1.0: Launch to public beta
+
+> Want to contribute? DM Benjamin or create an issue!
+
+---
+
+Made with ❤️ by Benjamin for all chaotic friend groups who just want to vibe ✨
