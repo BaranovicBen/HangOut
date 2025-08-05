@@ -1,0 +1,1 @@
+    //"start": "expo start", <- removed from json to run parsing logic
