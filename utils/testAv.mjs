@@ -1,9 +1,11 @@
+// utils/testAvailability.mjs
 import ical from 'node-ical';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
 import { normaliseFromIcalParsed } from './normaliseEvents.js';
-import { buildBusyMap, buildIndexers } from './buildBusyMap.js';
+import { getAvailabilityMap } from './getAvailabilityMap.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,13 +22,14 @@ const events = normaliseFromIcalParsed(parsed, {
   includeTentative: false,
 });
 
-const { busy, totalSlots } = buildBusyMap(events, { rangeStartUTC, rangeEndUTC, slotMinutes: 30 });
-const busyCount = busy.reduce((a,b)=>a+b,0);
+// one attendee for now
+const result = getAvailabilityMap([events], {
+  rangeStartUTC, rangeEndUTC,
+  sessionTimezone: 'Europe/Prague',
+  occasion: 'breakfast',
+  minDurationMin: 180,               // require at least 1 hour
+  requireFreeMorning: false,
+  slotMinutes: 30
+});
 
-console.log({ totalSlots, busySlots: busyCount, freeSlots: totalSlots - busyCount });
-
-// ukáž prvých pár slotov s časom (na sanity check)
-const { timeOf } = buildIndexers(rangeStartUTC, rangeEndUTC, 30);
-for (let i = 0; i < Math.min(10, totalSlots); i++) {
-  console.log(i, timeOf(i).toISOString(), busy[i]);
-}
+console.log(JSON.stringify(result.days.filter(d => d.hasAvailability), null, 2));
