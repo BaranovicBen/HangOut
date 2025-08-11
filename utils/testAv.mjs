@@ -27,7 +27,7 @@ const result = getAvailabilityMap([events], {
   rangeStartUTC, rangeEndUTC,
   sessionTimezone: 'Europe/Prague',
   occasion: 'breakfast',
-  minDurationMin: 180,               // require at least 1 hour
+  minDurationMin: 30,               // require at least 1 hour
   requireFreeMorning: false,
   slotMinutes: 30
 });

@@ -1,4 +1,3 @@
-// utils/buildBusyMap.js (ESM)
 export function buildIndexers(rangeStartUTC, rangeEndUTC, slotMinutes = 30) {
   const slotMs = slotMinutes * 60 * 1000;
   const totalSlots = Math.ceil((+rangeEndUTC - +rangeStartUTC) / slotMs);
@@ -20,7 +19,6 @@ export function buildBusyMap(events, { rangeStartUTC, rangeEndUTC, slotMinutes =
     if (!(ev.startUTC instanceof Date) || !(ev.endUTC instanceof Date)) continue;
     if (ev.endUTC <= ev.startUTC) continue;
 
-    // half-open [s, e)
     const s = Math.max(0, indexOf(+ev.startUTC));
     const e = Math.min(totalSlots, Math.ceil((+ev.endUTC - +rangeStartUTC) / (slotMinutes * 60 * 1000)));
     if (e > s) busy.fill(1, s, e);

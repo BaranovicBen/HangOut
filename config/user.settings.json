@@ -1,0 +1,7 @@
+{
+  "sessionTimezone": "Europe/Prague",
+  "occasions": {
+    "breakfast": { "windows": [{ "startHour": 8, "endHour": 11 }], "minDurationMin": 30 },
+    "night out": { "requireFreeMorning": true, "freeMorningWindow": { "startHour": 9, "endHour": 12 } }
+  }
+}
