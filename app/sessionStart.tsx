@@ -28,7 +28,7 @@ const SessionStart = () => {
   ]);
   const [party, setParty] = useState<string[]>([]);
   const [nextMorningFree, setNextMorningFree] = useState(false);
-  const [type, setType] = useState('Night Out','Lunch');
+  const [type, setType] = useState('Breakfast');
 
   const toggleFriend = (friend: string) => {
     if (party.includes(friend)) {
@@ -44,7 +44,7 @@ const SessionStart = () => {
       showsVerticalScrollIndicator={false}>
         {/* NavBar */}
         <View style={styles.navBar}>
-          <TouchableOpacity onPress={() => router.push('/Home')}>
+          <TouchableOpacity onPress={() => router.push('/home')}>
             <Text style={styles.sideIcon}>🏠</Text>
           </TouchableOpacity>
           <Text style={styles.navTitle}>HangOut</Text>

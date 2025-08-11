@@ -80,7 +80,7 @@ const SessionEnd = () => {
       {renderCalendar(2025, 7)}
       {renderCalendar(2025, 8)}
 
-      <TouchableOpacity style={styles.endButton} onPress={() => router.push("/Home")}>
+      <TouchableOpacity style={styles.endButton} onPress={() => router.push("/home")}>
         <Text style={styles.endButtonText}>End Session</Text>
       </TouchableOpacity>
     </ScrollView>

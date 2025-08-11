@@ -23,7 +23,7 @@ const AccountScreen = () => {
           <Text style={styles.sideIcon}>⚙️</Text>
         </TouchableOpacity>
         <Text style={styles.title}>My Account</Text>
-        <TouchableOpacity onPress={() => router.push('/Home')}>
+        <TouchableOpacity onPress={() => router.push('/home')}>
           <Text style={styles.sideIcon}>🏠</Text>
         </TouchableOpacity>
       </View>
