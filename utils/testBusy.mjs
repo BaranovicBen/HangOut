@@ -27,6 +27,6 @@ console.log({ totalSlots, busySlots: busyCount, freeSlots: totalSlots - busyCoun
 
 // ukáž prvých pár slotov s časom (na sanity check)
 const { timeOf } = buildIndexers(rangeStartUTC, rangeEndUTC, 30);
-for (let i = 0; i < Math.min(12, totalSlots); i++) {
+for (let i = 0; i < Math.min(10, totalSlots); i++) {
   console.log(i, timeOf(i).toISOString(), busy[i]);
 }
