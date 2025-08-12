@@ -1,4 +1,5 @@
-export const SLOT_MINUTES = 30;
+// config/availability.config.js (ESM)
+export const SLOT_MINUTES = 30; // základná granularita slotov
 
 export const OCCASION_DEFAULTS = {
   breakfast: {
@@ -16,15 +17,17 @@ export const OCCASION_DEFAULTS = {
     minDurationMin: 60,
     requireFreeMorning: false,
   },
-  "night out": {
+  night: {
     windows: [{ startHour: 17, endHour: 24 }],
     minDurationMin: 120,
     requireFreeMorning: true,
-    freeMorningWindow: { startHour: 8, endHour: 12 },
+    // (voliteľne) definícia rannej kontroly:
+    freeMorningWindow: { startHour: 7, endHour: 12 },
   },
   trip: {
+    // trip často chce „kedykoľvek“ – dve 12h okná sú dobrý default
     windows: [{ startHour: 0, endHour: 12 }, { startHour: 12, endHour: 24 }],
-    minDurationMin: 12 * 60, 
+    minDurationMin: 12 * 60, // 12h blok
     requireFreeMorning: false,
   },
 };
