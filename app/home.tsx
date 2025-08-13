@@ -54,40 +54,44 @@ const rangeEndUTC = endLocal.toUTC().toJSDate();
 
   // availability
   const result = getAvailabilityMap([events], { ...options, occasion: 'trip' as const })
+  // ... po getAvailabilityMap(...)
+  const monthStr = String(date.getMonth() + 1).padStart(2, '0');
 
-  // jedinečné dni, ktoré majú dostupnosť (tzn. celý deň voľný, keďže minDuration=1440)
-  const uniqueIsoDays = Array.from(
-    new Set((result?.days || []).filter(d => d.hasAvailability).map(d => d.dateISO))
-  )
+  // vezmi iba dni tohto mesiaca a uisti sa, že dateISO je string
+  const dayIsos: string[] = (result?.days ?? [])
+    .filter(d => d?.hasAvailability === true && typeof d?.dateISO === 'string')
+    .map(d => d.dateISO as string)
+    .filter(iso => iso.slice(5, 7) === monthStr);
+
+  // ← Set<string>, teda žiadne (string|null)[] chyby
+  const base = new Set<string>(dayIsos);
+
+  // DST fix (napr. posledná nedeľa v marci = 1380 min)
   const first = DateTime.fromObject(
     { year: date.getFullYear(), month: date.getMonth() + 1, day: 1 },
     { zone: tz }
-  )
-    const monthStr = String(date.getMonth() + 1).padStart(2, '0')
+  );
 
-    const base = new Set(
-    (result?.days || [])
-      .filter(d => d.hasAvailability && d.dateISO.slice(5, 7) === monthStr)
-      .map(d => d.dateISO) // "YYYY-MM-DD"
-  )
   for (let day = 1; day <= daysInMonth; day++) {
-    const startLocal = first.set({ day }).startOf('day')
-    const nextLocal = startLocal.plus({ days: 1 })
-    const minutesInDay = Math.round(nextLocal.diff(startLocal, 'minutes').minutes) // 1380/1440/1500
+    const dStartLocal = first.set({ day }).startOf('day');
+    const dNextLocal = dStartLocal.plus({ days: 1 });
+    const minutesInDay = Math.round(dNextLocal.diff(dStartLocal, 'minutes').minutes);
+
     if (minutesInDay !== 1440) {
-      const iso = startLocal.toISODate()! // "YYYY-MM-DD"
-      if (!base.has(iso)) {
-        const dayStartUTC = startLocal.toUTC().toJSDate()
-        const dayEndUTC = nextLocal.toUTC().toJSDate()
-        const overlaps = (events || []).some(ev => ev.startUTC < dayEndUTC && ev.endUTC > dayStartUTC)
-        if (!overlaps) base.add(iso)
+      const iso = dStartLocal.toISODate();          // string | null
+      if (iso && !base.has(iso)) {                  // ⬅️ ošetrené
+        const dayStartUTC = dStartLocal.toUTC().toJSDate();
+        const dayEndUTC = dNextLocal.toUTC().toJSDate();
+        const overlaps = Array.isArray(events) &&
+          events.some(ev => ev?.startUTC < dayEndUTC && ev?.endUTC > dayStartUTC);
+        if (!overlaps) base.add(iso);
       }
     }
   }
 
   return Array.from(base)
-    .map(iso => parseInt(iso.slice(8, 10), 10))
-    .sort((a, b) => a - b)
+    .map(iso => parseInt(iso.slice(8, 10), 10))     // iso je string, žiadne „possibly null“
+    .sort((a, b) => a - b);
 }
 
 const Home = () => {
