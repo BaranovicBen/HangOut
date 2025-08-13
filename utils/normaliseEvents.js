@@ -1,5 +1,4 @@
-// utils/normaliseEvents.js (ESM)
-import ical from 'node-ical';
+// utils/normaliseEvents.js (ESM, RN/Expo-safe)
 import { DateTime } from 'luxon';
 
 /**
@@ -50,7 +49,7 @@ export function normaliseEvents(rawEvents, options) {
 }
 
 /**
- * Convenience for node-ical.parseICS() object map.
+ * Convenience pre "node-ical-like" map (ako vracia tvoj parseIcsAndNormalize vstup pre normalizáciu).
  * @param {Record<string, any>} icsParsed
  * @param {any} options see normaliseEvents()
  */
@@ -66,7 +65,7 @@ export function normaliseFromIcalParsed(icsParsed, options) {
 /* -------------------- internal mappers & helpers -------------------- */
 
 function mapToNormalised(ev, { includeTentative }) {
-  // 1) node-ical VEVENT
+  // 1) ICS VEVENT (z tvojho ical.js prekladu: type, start/end sú JS Date; datetype: 'date'|'date-time')
   if (ev && ev.type === 'VEVENT') {
     const status = safeUpper(ev.status);
     if (status === 'CANCELLED') return null;
@@ -77,11 +76,11 @@ function mapToNormalised(ev, { includeTentative }) {
     const endUTC   = toUTCDate(ev.end);
     if (!startUTC || !endUTC || endUTC <= startUTC) return null;
 
-    const isAllDay = !!ev.isAllDay || isAllDayLike(startUTC, endUTC);
+    const isAllDay = !!ev.isAllDay || ev.datetype === 'date' || isAllDayLike(startUTC, endUTC);
     return { startUTC, endUTC, isAllDay, summary: ev.summary || '', transparency };
   }
 
-  // 2) Google Calendar
+  // 2) Google Calendar (REST)
   if (ev && ev.start && (ev.start.dateTime || ev.start.date)) {
     const status = safeUpper(ev.status);
     if (status === 'CANCELLED') return null;
@@ -116,7 +115,7 @@ function mapToNormalised(ev, { includeTentative }) {
   if (ev && ev.startUTC && ev.endUTC) {
     const s = ev.startUTC instanceof Date ? ev.startUTC : new Date(ev.startUTC);
     const e = ev.endUTC   instanceof Date ? ev.endUTC   : new Date(ev.endUTC);
-    if (!isFinite(s) || !isFinite(e) || e <= s) return null;
+    if (!Number.isFinite(+s) || !Number.isFinite(+e) || e <= s) return null;
     return {
       startUTC: s,
       endUTC: e,
@@ -137,21 +136,22 @@ function hasExplicitOffset(s) { return /Z$|[+\-]\d{2}:\d{2}$/.test(s); }
 
 function toUTCDate(value, timeZone) {
   if (!value) return null;
-  if (value instanceof Date) return value;
+  if (value instanceof Date) return Number.isFinite(+value) ? value : null;
   const s = String(value);
   if (hasExplicitOffset(s)) {
     const d = new Date(s);
-    return isFinite(d) ? d : null;
+    return Number.isFinite(+d) ? d : null;
   }
   if (timeZone) {
     const dt = DateTime.fromISO(s, { zone: timeZone });
     if (dt.isValid) return dt.toUTC().toJSDate();
   }
   const d = new Date(s);
-  return isFinite(d) ? d : null;
+  return Number.isFinite(+d) ? d : null;
 }
 
 function googleTimesToUTC(start, end, timeZone) {
+  // All-day: Google dáva date (exclusive end)
   if (start.date && end.date) {
     const startUTC = new Date(`${start.date}T00:00:00Z`);
     const endUTC   = new Date(`${end.date}T00:00:00Z`); // exclusive
@@ -191,5 +191,3 @@ function isAllDayLike(start, end) {
 }
 
 export default normaliseEvents;
-// from your project root
-//node utils/normaliseEvents.js utils/test.ics 2025-08-01 2025-08-31

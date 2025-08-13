@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import styles from '../styles/homeStyles'
 
 const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-const freeDays = [6, 10, 11, 14, 19, 20, 29, 31]
 
-const CalendarView = () => {
-  const [currentDate, setCurrentDate] = useState(new Date())
+type Props = {
+  currentDate: Date
+  onChangeMonth: (newDate: Date) => void
+  freeDays: number[]
+}
 
+const CalendarView: React.FC<Props> = ({ currentDate, onChangeMonth, freeDays }) => {
   const today = new Date()
   const year = currentDate.getFullYear()
   const month = currentDate.getMonth()
@@ -22,7 +25,7 @@ const CalendarView = () => {
     const totalWeeks = Math.ceil(totalCells / 7)
 
     for (let week = 0; week < totalWeeks; week++) {
-      const weekRow = []
+      const weekRow: React.JSX.Element[] = []
       for (let day = 0; day < 7; day++) {
         if ((week === 0 && day < dayOffset) || currentDay > daysInMonth) {
           weekRow.push(<View style={styles.dayCell} key={`empty-${week}-${day}`} />)
@@ -62,10 +65,10 @@ const CalendarView = () => {
 
   return (
     <View style={styles.calendarWrapper}>
-      <View style={styles.calendarHeader}>
+      <View className="calendarHeader" style={styles.calendarHeader}>
         <TouchableOpacity
           onPress={() =>
-            setCurrentDate((prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1))
+            onChangeMonth(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1))
           }
         >
           <Text style={styles.arrow}>{'<'}</Text>
@@ -77,7 +80,7 @@ const CalendarView = () => {
 
         <TouchableOpacity
           onPress={() =>
-            setCurrentDate((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1))
+            onChangeMonth(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1))
           }
         >
           <Text style={styles.arrow}>{'>'}</Text>
