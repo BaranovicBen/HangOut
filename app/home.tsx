@@ -6,11 +6,9 @@ import styles from '@/styles/homeStyles'
 import { DateTime } from 'luxon';
 import {sessionTimezone} from '../config/user.settings.json';
 
-
 import * as FileSystem from 'expo-file-system'
 import { Asset } from 'expo-asset'
 
-// utils – tieto súbory už máš
 import { parseIcsAndNormalize } from '@/utils/parseiCal.mjs'
 import { getAvailabilityMap } from '@/utils/getAvailabilityMap.js'
 import { resolveOptions } from '@/utils/settings.js'
@@ -23,10 +21,8 @@ async function loadIcsTextFromAssets(): Promise<string> {
   return FileSystem.readAsStringAsync(uri, { encoding: FileSystem.EncodingType.UTF8 });
 }
 
-const tz = sessionTimezone; // alebo z configs
-
-// Spočítaj celé voľné dni (1440 min) pre daný mesiac cez "trip"
 async function getFreeDaysForMonth(date: Date): Promise<number[]> {
+  const tz = sessionTimezone; 
   const icsText = await loadIcsTextFromAssets()
 
   const startLocal = DateTime.fromObject(
@@ -63,14 +59,34 @@ const rangeEndUTC = endLocal.toUTC().toJSDate();
   const uniqueIsoDays = Array.from(
     new Set((result?.days || []).filter(d => d.hasAvailability).map(d => d.dateISO))
   )
+  const first = DateTime.fromObject(
+    { year: date.getFullYear(), month: date.getMonth() + 1, day: 1 },
+    { zone: tz }
+  )
+    const monthStr = String(date.getMonth() + 1).padStart(2, '0')
 
-  // pre mapovanie do kalendára vrátime čísla dňa (1..31)
-  return uniqueIsoDays
-    .map(iso => {
-      // iso: YYYY-MM-DD
-      const parts = iso.split('-')
-      return parseInt(parts[2], 10) // "06" -> 6
-    })
+    const base = new Set(
+    (result?.days || [])
+      .filter(d => d.hasAvailability && d.dateISO.slice(5, 7) === monthStr)
+      .map(d => d.dateISO) // "YYYY-MM-DD"
+  )
+  for (let day = 1; day <= daysInMonth; day++) {
+    const startLocal = first.set({ day }).startOf('day')
+    const nextLocal = startLocal.plus({ days: 1 })
+    const minutesInDay = Math.round(nextLocal.diff(startLocal, 'minutes').minutes) // 1380/1440/1500
+    if (minutesInDay !== 1440) {
+      const iso = startLocal.toISODate()! // "YYYY-MM-DD"
+      if (!base.has(iso)) {
+        const dayStartUTC = startLocal.toUTC().toJSDate()
+        const dayEndUTC = nextLocal.toUTC().toJSDate()
+        const overlaps = (events || []).some(ev => ev.startUTC < dayEndUTC && ev.endUTC > dayStartUTC)
+        if (!overlaps) base.add(iso)
+      }
+    }
+  }
+
+  return Array.from(base)
+    .map(iso => parseInt(iso.slice(8, 10), 10))
     .sort((a, b) => a - b)
 }
 
