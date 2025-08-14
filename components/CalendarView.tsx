@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import styles from '../styles/homeStyles'
 
 const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -14,13 +14,13 @@ const CalendarView: React.FC<Props> = ({ currentDate, onChangeMonth, freeDays })
   const today = new Date()
   const year = currentDate.getFullYear()
   const month = currentDate.getMonth()
-  const firstDay = new Date(year, month, 1).getDay()      // 0=Sun..6=Sat
+  const firstDay = new Date(year, month, 1).getDay()   
   const daysInMonth = new Date(year, month + 1, 0).getDate()
 
   const renderCalendar = () => {
     const calendar = []
     let currentDay = 1
-    const dayOffset = (firstDay + 6) % 7                  // posun pre Mon..Sun
+    const dayOffset = (firstDay + 6) % 7         
     const totalCells = dayOffset + daysInMonth
     const totalWeeks = Math.ceil(totalCells / 7)
 
