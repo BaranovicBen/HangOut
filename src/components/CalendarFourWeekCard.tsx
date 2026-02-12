@@ -17,9 +17,7 @@ export const CalendarFourWeekCard: React.FC<CalendarFourWeekCardProps> = ({ free
   const today = new Date();
   const gridDates = get4WeekGrid(today);
   
-  // Get month and year for the header
-  const currentMonth = today.getMonth();
-  const currentYear = today.getFullYear();
+  // Get display month info for navigation
   const displayMonthNum = displayMonth.getMonth();
   const displayYear = displayMonth.getFullYear();
   

@@ -11,9 +11,9 @@ interface CreateSessionScreenProps {
 
 export const CreateSessionScreen: React.FC<CreateSessionScreenProps> = ({ navigation }) => {
   const { colors } = useTheme();
-  const [fromDate, setFromDate] = useState('Select date');
-  const [toDate, setToDate] = useState('Select date');
-  const [sessionType, setSessionType] = useState('Night Out');
+  const [fromDate] = useState('Select date');
+  const [toDate] = useState('Select date');
+  const [sessionType] = useState('Night Out');
   const [nextMorningFree, setNextMorningFree] = useState(false);
   
   const handleCreate = () => {
