@@ -1,9 +1,9 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SettingsScreen } from '../../screens/SettingsScreen';
-import { ThemeScreen } from '../../screens/ThemeScreen';
-import { CalendarConnectScreen } from '../../screens/CalendarConnectScreen';
-import { ProfileScreen } from '../../screens/ProfileScreen';
+import { SettingsScreen } from '../screens/SettingsScreen';
+import { ThemeScreen } from '../screens/ThemeScreen';
+import { CalendarConnectScreen } from '../screens/CalendarConnectScreen';
+import { ProfileScreen } from '../screens/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
 

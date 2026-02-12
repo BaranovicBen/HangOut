@@ -1,10 +1,10 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { HomeScreen } from '../../screens/HomeScreen';
-import { CreateSessionScreen } from '../../screens/CreateSessionScreen';
-import { JoinSessionScreen } from '../../screens/JoinSessionScreen';
-import { SessionLobbyScreen } from '../../screens/SessionLobbyScreen';
-import { ProfileScreen } from '../../screens/ProfileScreen';
+import { HomeScreen } from '../screens/HomeScreen';
+import { CreateSessionScreen } from '../screens/CreateSessionScreen';
+import { JoinSessionScreen } from '../screens/JoinSessionScreen';
+import { SessionLobbyScreen } from '../screens/SessionLobbyScreen';
+import { ProfileScreen } from '../screens/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
 

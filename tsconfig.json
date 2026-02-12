@@ -11,10 +11,8 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "src/**/*",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "src/**/*"
   ],
   "allowJs": true,
-  "checkJs": true,
+  "checkJs": true
 }
