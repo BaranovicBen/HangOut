@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '../theme/ThemeProvider';
-import { borderRadius, spacing, screenPadding } from '../theme/spacing';
+import { borderRadius, spacing, screenPadding, shadows } from '../theme/spacing';
 import { get4WeekGrid, toISODate, isPastDate, isPastMonth, getMonthYearString } from '../utils/dates';
 
 interface CalendarFourWeekCardProps {
@@ -91,67 +92,73 @@ export const CalendarFourWeekCard: React.FC<CalendarFourWeekCardProps> = ({ free
   };
   
   return (
-    <View
-      style={[
-        styles.card,
-        {
-          backgroundColor: colors.cardBackground,
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: isDark ? 3 : 6 },
-          shadowOpacity: isDark ? 0.10 : 0.12,
-          shadowRadius: isDark ? 8 : 16,
-          elevation: 4,
-        },
-      ]}
-    >
-      {/* Month navigation */}
-      <View style={styles.monthNav}>
-        <TouchableOpacity
-          onPress={handlePrevMonth}
-          disabled={!canGoBack}
-          style={styles.navButton}
-        >
-          <Text
-            style={[
-              styles.navArrow,
-              { color: canGoBack ? colors.text : colors.expiredDay },
-            ]}
+    <View style={[styles.cardContainer, shadows.medium]}>
+      <LinearGradient
+        colors={[colors.gradientStart, colors.gradientEnd]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.gradientHeader}
+      >
+        {/* Month navigation */}
+        <View style={styles.monthNav}>
+          <TouchableOpacity
+            onPress={handlePrevMonth}
+            disabled={!canGoBack}
+            style={styles.navButton}
           >
-            ‹
+            <Text
+              style={[
+                styles.navArrow,
+                { color: canGoBack ? '#FFFFFF' : 'rgba(255, 255, 255, 0.4)' },
+              ]}
+            >
+              ‹
+            </Text>
+          </TouchableOpacity>
+          
+          <Text style={styles.monthTitle}>
+            {getMonthYearString(displayMonth)}
           </Text>
-        </TouchableOpacity>
+          
+          <TouchableOpacity onPress={handleNextMonth} style={styles.navButton}>
+            <Text style={[styles.navArrow, { color: '#FFFFFF' }]}>›</Text>
+          </TouchableOpacity>
+        </View>
         
-        <Text style={[styles.monthTitle, { color: colors.text }]}>
-          {getMonthYearString(displayMonth)}
-        </Text>
-        
-        <TouchableOpacity onPress={handleNextMonth} style={styles.navButton}>
-          <Text style={[styles.navArrow, { color: colors.text }]}>›</Text>
-        </TouchableOpacity>
-      </View>
-      
-      {/* Weekday labels */}
-      <View style={styles.weekdayRow}>
-        {WEEKDAYS.map((day) => (
-          <View key={day} style={[styles.weekdayCell, { width: cellSize }]}>
-            <Text style={[styles.weekdayText, { color: colors.textSecondary }]}>
-              {day}
+        {/* Weekday labels */}
+        <View style={styles.weekdayRow}>
+          {WEEKDAYS.map((day) => (
+            <View key={day} style={[styles.weekdayCell, { width: cellSize }]}>
+              <Text style={styles.weekdayText}>
+                {day}
+              </Text>
             </Text>
           </View>
         ))}
       </View>
+      </LinearGradient>
       
-      {/* 4-week grid */}
-      <View style={styles.gridContainer}>{renderWeeks()}</View>
+      {/* Calendar Grid in white container */}
+      <View style={[styles.calendarBody, { backgroundColor: colors.cardBackground }]}>
+        <View style={styles.gridContainer}>{renderWeeks()}</View>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
+  cardContainer: {
     borderRadius: borderRadius.xlarge,
-    padding: spacing.xl,
     marginHorizontal: screenPadding,
+    overflow: 'hidden',
+  },
+  gradientHeader: {
+    padding: spacing.xl,
+    paddingBottom: spacing.lg,
+  },
+  calendarBody: {
+    padding: spacing.xl,
+    paddingTop: spacing.lg,
   },
   monthNav: {
     flexDirection: 'row',
@@ -169,23 +176,27 @@ const styles = StyleSheet.create({
     fontWeight: '300',
   },
   monthTitle: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: '700',
     flex: 1,
     textAlign: 'center',
+    color: '#FFFFFF',
+    letterSpacing: 0.5,
   },
   weekdayRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: spacing.md,
+    marginBottom: spacing.sm,
   },
   weekdayCell: {
     alignItems: 'center',
   },
   weekdayText: {
     fontSize: 11,
-    fontWeight: '500',
+    fontWeight: '600',
     textTransform: 'uppercase',
+    color: 'rgba(255, 255, 255, 0.9)',
+    letterSpacing: 0.5,
   },
   gridContainer: {
     gap: spacing.sm,

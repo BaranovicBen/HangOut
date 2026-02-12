@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, ViewStyle } from 'react-native';
 import { useTheme } from '../theme/ThemeProvider';
-import { borderRadius, spacing } from '../theme/spacing';
+import { borderRadius, spacing, shadows } from '../theme/spacing';
 
 interface SecondaryButtonProps {
   title: string;
@@ -16,6 +16,7 @@ export const SecondaryButton: React.FC<SecondaryButtonProps> = ({ title, onPress
     <TouchableOpacity
       style={[
         styles.button,
+        shadows.soft,
         {
           backgroundColor: colors.secondaryButtonBg,
           borderColor: colors.secondaryButtonBorder,
@@ -35,13 +36,14 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.lg,
     paddingHorizontal: spacing.xxl,
     borderRadius: borderRadius.medium,
-    borderWidth: 1,
+    borderWidth: 1.5,
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 50,
+    minHeight: 54,
   },
   text: {
     fontSize: 17,
     fontWeight: '600',
+    letterSpacing: 0.3,
   },
 });
