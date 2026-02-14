@@ -8,23 +8,28 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
+import { useTheme } from '@/contexts/ThemeContext'
+import { spacing, borderRadius } from '@/styles/spacing'
+import { typography } from '@/styles/typography'
 
 const AccountScreen = () => {
+  const { colors } = useTheme()
   const [isEditing, setIsEditing] = useState(false)
   const [name, setName] = useState('Maia Juriska')
   const [username, setUsername] = useState('@maiaJuri')
   const [friends, setFriends] = useState(['@johndoe1', '@johndoe2', '@johndoe3'])
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       {/* NavBar */}
       <View style={styles.navBar}>
         <TouchableOpacity onPress={() => router.push('/settings')}>
-          <Text style={styles.sideIcon}>⚙️</Text>
+          <Ionicons name="settings-outline" size={24} color={colors.text} />
         </TouchableOpacity>
-        <Text style={styles.title}>My Account</Text>
+        <Text style={[styles.title, { color: colors.text }]}>My Account</Text>
         <TouchableOpacity onPress={() => router.push('/home')}>
-          <Text style={styles.sideIcon}>🏠</Text>
+          <Ionicons name="home" size={24} color={colors.text} />
         </TouchableOpacity>
       </View>
 
@@ -37,35 +42,45 @@ const AccountScreen = () => {
       />
 
       {/* User Info */}
-      <View style={styles.infoBox}>
-        <Text style={styles.sectionTitle}>You</Text>
+      <View style={[styles.infoBox, { backgroundColor: colors.card }]}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>You</Text>
 
         {isEditing ? (
           <>
             <TextInput
-              style={styles.input}
+              style={[styles.input, { 
+                borderColor: colors.border, 
+                color: colors.text,
+                backgroundColor: colors.background,
+              }]}
               value={name}
               onChangeText={setName}
               placeholder="Your name"
+              placeholderTextColor={colors.textSecondary}
             />
             <TextInput
-              style={styles.input}
+              style={[styles.input, { 
+                borderColor: colors.border, 
+                color: colors.text,
+                backgroundColor: colors.background,
+              }]}
               value={username}
               onChangeText={(text) => {
                 if (text.startsWith('@')) setUsername(text)
               }}
               placeholder="@username"
+              placeholderTextColor={colors.textSecondary}
             />
           </>
         ) : (
           <>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Name</Text>
-              <Text style={styles.infoValue}>{name}</Text>
+              <Text style={[styles.infoLabel, { color: colors.text }]}>Name</Text>
+              <Text style={[styles.infoValue, { color: colors.textSecondary }]}>{name}</Text>
             </View>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Username</Text>
-              <Text style={styles.infoValue}>{username}</Text>
+              <Text style={[styles.infoLabel, { color: colors.text }]}>Username</Text>
+              <Text style={[styles.infoValue, { color: colors.textSecondary }]}>{username}</Text>
             </View>
           </>
         )}
@@ -74,23 +89,23 @@ const AccountScreen = () => {
           style={styles.editRow}
           onPress={() => setIsEditing((prev) => !prev)}
         >
-          <Text style={styles.editText}>{isEditing ? 'Save' : 'Edit'}</Text>
-          <View style={styles.editIcon} />
+          <Text style={[styles.editText, { color: colors.text }]}>{isEditing ? 'Save' : 'Edit'}</Text>
+          <Ionicons name={isEditing ? 'checkmark' : 'create-outline'} size={20} color={colors.text} />
         </TouchableOpacity>
       </View>
 
       {/* Friends List */}
-      <View style={styles.friendsBox}>
+      <View style={[styles.friendsBox, { backgroundColor: colors.card }]}>
         <View style={styles.friendsHeader}>
-          <Text style={styles.sectionTitle}>Friends</Text>
-          <View style={styles.plusIcon} />
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>Friends</Text>
+          <Ionicons name="add-circle-outline" size={24} color={colors.text} />
         </View>
 
         {friends.length > 0 ? (
           friends.map((friend, index) => (
             <View key={friend} style={styles.friendRow}>
-              <View style={styles.friendIcon} />
-              <Text style={styles.friendText}>{friend}</Text>
+              <View style={[styles.friendIcon, { backgroundColor: colors.textSecondary }]} />
+              <Text style={[styles.friendText, { color: colors.text }]}>{friend}</Text>
               <TouchableOpacity
                 onPress={() =>
                   setFriends((prev) =>
@@ -98,13 +113,13 @@ const AccountScreen = () => {
                   )
                 }
               >
-                <Text style={styles.remove}>✕</Text>
+                <Ionicons name="close-circle" size={24} color="red" />
               </TouchableOpacity>
             </View>
           ))
         ) : (
           <View style={styles.friendEmptyBox}>
-            <View style={styles.friendBox} />
+            <View style={[styles.friendBox, { backgroundColor: colors.textSecondary }]} />
           </View>
         )}
       </View>
@@ -115,7 +130,6 @@ const AccountScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     paddingTop: 60,
     alignItems: 'center',
   },
@@ -123,117 +137,103 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 24,
+    paddingHorizontal: spacing.lg,
     alignItems: 'center',
-    marginBottom: 16,
-  },
-  sideIcon: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    marginBottom: spacing.md,
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: typography.sizes.xl,
+    fontWeight: typography.weights.bold,
   },
   profileImage: {
     width: 120,
     height: 120,
     borderRadius: 60,
-    marginBottom: 16,
+    marginBottom: spacing.md,
   },
   infoBox: {
-    backgroundColor: '#f0f0f0',
     width: '90%',
-    borderRadius: 20,
-    padding: 16,
-    marginBottom: 24,
+    borderRadius: borderRadius.xl,
+    padding: spacing.md,
+    marginBottom: spacing.lg,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   sectionTitle: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginBottom: 12,
+    fontWeight: typography.weights.bold,
+    fontSize: typography.sizes.md,
+    marginBottom: spacing.md,
   },
   infoRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 4,
+    paddingVertical: spacing.xs,
   },
   infoLabel: {
-    fontSize: 16,
-    fontWeight: '500',
+    fontSize: typography.sizes.md,
+    fontWeight: typography.weights.medium,
   },
   infoValue: {
-    fontSize: 16,
+    fontSize: typography.sizes.md,
   },
   editRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 12,
+    marginTop: spacing.md,
     alignSelf: 'flex-end',
   },
   editText: {
-    fontSize: 16,
-    marginRight: 8,
-  },
-  editIcon: {
-    width: 20,
-    height: 20,
-    backgroundColor: '#000',
+    fontSize: typography.sizes.md,
+    marginRight: spacing.sm,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 8,
-    borderRadius: 8,
-    marginVertical: 4,
+    padding: spacing.sm,
+    borderRadius: spacing.sm,
+    marginVertical: spacing.xs,
   },
   friendsBox: {
-    backgroundColor: '#f0f0f0',
     width: '90%',
-    borderRadius: 20,
-    padding: 16,
+    borderRadius: borderRadius.xl,
+    padding: spacing.md,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   friendsHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
-  },
-  plusIcon: {
-    width: 20,
-    height: 20,
-    backgroundColor: '#000',
+    marginBottom: spacing.md,
   },
   friendRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: spacing.sm,
   },
   friendIcon: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'black',
-    marginRight: 12,
+    marginRight: spacing.md,
   },
   friendText: {
     flex: 1,
-    fontSize: 16,
-  },
-  remove: {
-    fontSize: 20,
-    color: 'red',
-    paddingHorizontal: 8,
+    fontSize: typography.sizes.md,
   },
   friendEmptyBox: {
     alignItems: 'center',
-    marginTop: 12,
+    marginTop: spacing.md,
   },
   friendBox: {
     width: '100%',
     height: 60,
-    backgroundColor: '#000',
-    borderRadius: 16,
+    borderRadius: borderRadius.lg,
   },
 })
 
