@@ -1,8 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { View, TouchableOpacity, Text } from 'react-native'
+import { View, TouchableOpacity, Text, StyleSheet, ScrollView } from 'react-native'
 import { router } from 'expo-router'
+import { Ionicons } from '@expo/vector-icons'
 import CalendarView from '@/components/CalendarView'
-import styles from '@/styles/homeStyles'
+import Button from '@/components/Button'
+import EventCard from '@/components/EventCard'
+import ProfileAvatar from '@/components/ProfileAvatar'
+import { useTheme } from '@/contexts/ThemeContext'
+import { spacing, borderRadius } from '@/styles/spacing'
+import { typography } from '@/styles/typography'
+import { colors as colorPalette } from '@/styles/colors'
 import { DateTime } from 'luxon';
 import {sessionTimezone} from '../config/user.settings.json';
 
@@ -95,11 +102,21 @@ const rangeEndUTC = endLocal.toUTC().toJSDate();
 }
 
 const Home = () => {
+  const { colors, toggleTheme } = useTheme()
   const [buttonActive, setButtonActive] = useState(false)
   const [currentDate, setCurrentDate] = useState(new Date())
   const [freeDays, setFreeDays] = useState<number[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  // Mock selected days for demonstration (matching design spec: 14, 16, 18, 20, 22, 23, 25, 26, 27, 28)
+  const selectedDays = [16, 18, 20, 22, 23, 25, 26, 27, 28]
+
+  // Mock events for "Your week ahead" section
+  const upcomingEvents = [
+    { id: '1', title: 'Coffee with Sam', time: 'Sun, Feb 16 · 10:00 AM', dotColor: colorPalette.eventTeal },
+    { id: '2', title: 'Team standup', time: 'Sun, Feb 16 · 2:00 PM', dotColor: colorPalette.eventGreen },
+  ]
 
   useEffect(() => {
     let alive = true
@@ -152,42 +169,108 @@ const Home = () => {
   }, [loading, error, freeDays, currentDate])
 
   return (
-    <View style={styles.container}>
-      {/* Navigation Bar */}
-      <View style={styles.navBar}>
-        <TouchableOpacity onPress={() => router.push('/settings')}>
-          <Text style={styles.sideIcon}>⚙️</Text>
-        </TouchableOpacity>
-        <Text style={styles.navTitle}>HangOut</Text>
-        <TouchableOpacity onPress={() => router.push('/account')}>
-          <Text style={styles.sideIcon}>👤</Text>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      {/* Header */}
+      <View style={styles.header}>
+        <ProfileAvatar text="ME" size={40} />
+        <Text style={[styles.appTitle, { color: colors.text }]}>HangOut</Text>
+        <TouchableOpacity onPress={toggleTheme}>
+          <Ionicons name="settings-outline" size={24} color={colors.text} />
         </TouchableOpacity>
       </View>
 
-      {/* Info Text */}
-      <View style={styles.infoBox}>
-        <Text style={styles.infoText}>{infoText}</Text>
-      </View>
-
-      {/* Calendar */}
-      <CalendarView
-        currentDate={currentDate}
-        onChangeMonth={setCurrentDate}
-        freeDays={freeDays}
-      />
-
-      {/* Button */}
-      <TouchableOpacity
-        style={[
-          styles.button,
-          buttonActive ? styles.buttonActive : styles.buttonInactive,
-        ]}
-        onPress={() => { setButtonActive(!buttonActive); router.push('/sessionStart'); }}
+      <ScrollView 
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.buttonText}>Find time...</Text>
-      </TouchableOpacity>
+        {/* Calendar */}
+        <CalendarView
+          currentDate={currentDate}
+          onChangeMonth={setCurrentDate}
+          freeDays={freeDays}
+          selectedDays={selectedDays}
+        />
+
+        {/* Your week ahead section */}
+        <View style={styles.eventsSection}>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>Your week ahead</Text>
+          {upcomingEvents.map((event) => (
+            <EventCard
+              key={event.id}
+              title={event.title}
+              time={event.time}
+              dotColor={event.dotColor}
+            />
+          ))}
+        </View>
+
+        {/* Action Buttons */}
+        <View style={styles.buttonsContainer}>
+          <Button
+            title="Create Session"
+            icon="calendar"
+            variant="filled"
+            onPress={() => { setButtonActive(!buttonActive); router.push('/sessionStart'); }}
+            style={styles.button}
+          />
+          <Button
+            title="Join Session"
+            icon="people"
+            variant="outlined"
+            onPress={() => { router.push('/sessionStart'); }}
+            style={styles.button}
+          />
+        </View>
+      </ScrollView>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 60,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: spacing.lg,
+    marginBottom: spacing.md,
+  },
+  appTitle: {
+    fontSize: typography.sizes.xl,
+    fontWeight: typography.weights.bold,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    alignItems: 'center',
+    paddingBottom: spacing.xxxl,
+  },
+  eventsSection: {
+    width: '90%',
+    marginTop: spacing.lg,
+    marginBottom: spacing.lg,
+  },
+  sectionTitle: {
+    fontSize: typography.sizes.lg,
+    fontWeight: typography.weights.bold,
+    marginBottom: spacing.md,
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '90%',
+    marginTop: spacing.md,
+    gap: spacing.md,
+  },
+  button: {
+    flex: 1,
+    minWidth: 0,
+  },
+})
 
 export default Home
