@@ -44,7 +44,7 @@ const CalendarView: React.FC<Props> = ({ currentDate, onChangeMonth, freeDays, s
           const isSelected = selectedDays.includes(currentDay) && !isPast
 
           // Determine cell styling
-          let cellStyle = styles.dayCell
+          let cellStyle: any = styles.dayCell
           let textColor = colors.textSecondary
 
           if (isSelected) {

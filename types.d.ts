@@ -1,0 +1,20 @@
+// Type declarations for asset imports
+declare module '*.ics' {
+  const content: number
+  export default content
+}
+
+declare module '*.png' {
+  const content: number
+  export default content
+}
+
+declare module '*.jpg' {
+  const content: number
+  export default content
+}
+
+declare module '*.jpeg' {
+  const content: number
+  export default content
+}
