@@ -4,10 +4,12 @@ import {
   View,
   Text,
   StyleSheet,
-  FlatList,
   TouchableOpacity,
-  Dimensions,
 } from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
+import { useTheme } from '@/contexts/ThemeContext'
+import { spacing, borderRadius } from '@/styles/spacing'
+import { typography } from '@/styles/typography'
 
 const sections = [
   {
@@ -25,26 +27,28 @@ const sections = [
 ]
 
 const SettingsScreen = () => {
+  const { colors } = useTheme()
+  
   const renderRow = (item: string, index: number, total: number) => {
     const isLast = index === total - 1
     return (
-      <View key={item} style={[styles.row, !isLast && styles.rowBorder]}>
-        <View style={styles.iconPlaceholder} />
-        <Text style={styles.rowText}>{item}</Text>
+      <View key={item} style={[styles.row, !isLast && { borderBottomWidth: 1, borderBottomColor: colors.border }]}>
+        <View style={[styles.iconPlaceholder, { backgroundColor: colors.textSecondary }]} />
+        <Text style={[styles.rowText, { color: colors.text }]}>{item}</Text>
       </View>
     )
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       {/* NavBar */}
       <View style={styles.navBar}>
         <TouchableOpacity onPress={() => router.push('/home')}>
-            <Text style={styles.sideIcon}>🏠</Text>
+          <Ionicons name="home" size={24} color={colors.text} />
         </TouchableOpacity>
-            <Text style={styles.navTitle}>Settings</Text>
-        <TouchableOpacity onPress={()=> router.push('/account')}>
-            <Text style={styles.sideIcon}>👤</Text>
+        <Text style={[styles.navTitle, { color: colors.text }]}>Settings</Text>
+        <TouchableOpacity onPress={() => router.push('/account')}>
+          <Ionicons name="person" size={24} color={colors.text} />
         </TouchableOpacity>
       </View>
 
@@ -52,8 +56,8 @@ const SettingsScreen = () => {
       <View style={styles.sectionsWrapper}>
         {sections.map((section) => (
           <View key={section.title} style={styles.section}>
-            <Text style={styles.sectionTitle}>{section.title}</Text>
-            <View style={styles.sectionBox}>
+            <Text style={[styles.sectionTitle, { color: colors.text }]}>{section.title}</Text>
+            <View style={[styles.sectionBox, { backgroundColor: colors.card }]}>
               {section.data.map((item, index) =>
                 renderRow(item, index, section.data.length)
               )}
@@ -68,7 +72,6 @@ const SettingsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     paddingTop: 60,
     alignItems: 'center',
   },
@@ -76,58 +79,49 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 24,
+    paddingHorizontal: spacing.lg,
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: spacing.md,
   },
   navTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  navSide: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: typography.sizes.xl,
+    fontWeight: typography.weights.bold,
   },
   sectionsWrapper: {
     width: '90%',
   },
   section: {
-    marginBottom: 24,
+    marginBottom: spacing.lg,
   },
   sectionTitle: {
-    fontWeight: '600',
-    fontSize: 14,
-    marginBottom: 6,
-    marginLeft: 6,
+    fontWeight: typography.weights.semibold,
+    fontSize: typography.sizes.sm,
+    marginBottom: spacing.sm,
+    marginLeft: spacing.sm,
   },
   sectionBox: {
-    backgroundColor: '#f0f0f0',
-    borderRadius: 20,
+    borderRadius: borderRadius.xl,
     overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
-  rowBorder: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.md,
   },
   iconPlaceholder: {
     width: 24,
     height: 24,
-    backgroundColor: '#000',
     borderRadius: 4,
-    marginRight: 16,
+    marginRight: spacing.md,
   },
   rowText: {
-    fontSize: 16,
-  },
-  sideIcon: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: typography.sizes.md,
   },
 })
 
