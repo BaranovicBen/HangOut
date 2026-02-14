@@ -44,7 +44,7 @@ const Button: React.FC<ButtonProps> = ({
     {
       color: variant === 'filled' 
         ? (theme === 'dark' ? colors.text : colors.background) 
-        : (theme === 'dark' ? colors.text : colors.text),
+        : colors.text,
     },
     textStyle,
   ]
@@ -57,7 +57,7 @@ const Button: React.FC<ButtonProps> = ({
           size={20}
           color={variant === 'filled' 
             ? (theme === 'dark' ? colors.text : colors.background) 
-            : (theme === 'dark' ? colors.text : colors.text)}
+            : colors.text}
           style={styles.icon}
         />
       )}
